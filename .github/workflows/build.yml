@@ -28,4 +28,7 @@ jobs:
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 29
-        script: ./gradlew connectedCheck
+        script: adb logcat *:S TestRunner:V & LOGCAT_PID=$! ; \
+                ./gradlew :app:cAT ; \
+                if [ -n "$LOGCAT_PID" ] ; then kill $LOGCAT_PID; fi.
+                /gradlew connectedCheck
